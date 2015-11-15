@@ -1,0 +1,17 @@
+{
+    "name"              : "corycollier/simplesamlphp-theme",
+    "description"       : "Theme for use in SimpleSAMLphp installations",
+    "type"              : "simplesamlphp-module",
+    "license"           : "MIT",
+    "minimum-stability" : "dev",
+    "prefer-stable"     : true,
+    "require"           : {
+        "simplesamlphp/composer-module-installer": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Cory Collier",
+            "email": "corycollier@corycollier.com"
+        }
+    ]
+}
