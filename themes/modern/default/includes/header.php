@@ -52,7 +52,4 @@ $title    = isset($this->data['header']) ? $this->data['header'] :'SimpleSAMLphp
         </div>
       </div><!-- end .row -->
 
-      <pre>
 
-      <?php print_r($this->configuration); ?>
-      </pre>

@@ -51,3 +51,5 @@ $title    = isset($this->data['header']) ? $this->data['header'] :'SimpleSAMLphp
           <h1 class="mainTitle"><?php echo $title; ?></h1>
         </div>
       </div><!-- end .row -->
+
+
