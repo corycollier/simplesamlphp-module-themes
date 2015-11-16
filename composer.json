@@ -5,7 +5,7 @@
     "license"           : "MIT",
     "minimum-stability" : "dev",
     "prefer-stable"     : true,
-
+    "keywords"          : [ "simplesamlphp", "modules" ],
     "require"           : {
         "simplesamlphp/composer-module-installer": "~1.0"
     },
