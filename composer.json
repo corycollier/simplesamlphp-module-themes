@@ -5,9 +5,21 @@
     "license"           : "MIT",
     "minimum-stability" : "dev",
     "prefer-stable"     : true,
+
     "require"           : {
         "simplesamlphp/composer-module-installer": "dev-master"
     },
+
+    "require-dev" : {
+        "phploc/phploc"             : "^3.0@dev",
+        "pdepend/pdepend"           : "~2.0",
+        "phpmd/phpmd"               : "dev-master",
+        "squizlabs/php_codesniffer" : "^2.0@dev",
+        "sebastian/phpcpd"          : "^2.0@dev",
+        "phpunit/phpunit"           : "~5.0",
+        "theseer/phpdox"            : "dev-master"
+    },
+
     "authors": [
         {
             "name": "Cory Collier",
