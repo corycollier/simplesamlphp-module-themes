@@ -4,6 +4,7 @@ vendor/
 build/*
 # keep the config files in the build folder
 !build/*.xml
+src/bower_components
 
 # Files
 composer.phar
