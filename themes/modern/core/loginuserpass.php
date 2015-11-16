@@ -23,39 +23,44 @@ $errorparams          = $this->data['errorparams'];
 
 
 <div class="row">
-  <div class="col-md-12">
-    <h2><?php echo $this->t('{login:user_pass_header}'); ?></h2>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php echo $this->t('{login:user_pass_header}'); ?></h3>
+    </div>
 
-    <p class="logintext">
-      <?php echo $this->t('{login:user_pass_text}'); ?>
-    </p>
+    <div class="panel-body">
+      <p class="logintext">
+        <?php echo $this->t('{login:user_pass_text}'); ?>
+      </p>
 
-    <form action="?" method="post" name="f">
 
-      <div class="form-group">
-        <label for-"username">Username</label>
-        <input type="text" id="username"
-          tabindex="1"
-          name="username"
-          value="<?php echo htmlspecialchars($this->data['username']); ?>"
-          class="form-control"
-          />
-      </div>
+      <form action="?" method="post" name="f">
 
-      <div class="form-group">
-        <label for-"password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" />
-      </div>
+        <div class="form-group">
+          <label for-"username">Username</label>
+          <input type="text" id="username"
+            tabindex="1"
+            name="username"
+            value="<?php echo htmlspecialchars($this->data['username']); ?>"
+            class="form-control"
+            />
+        </div>
 
-      <button type="submit" class="btn btn-default">Submit</button>
+        <div class="form-group">
+          <label for-"password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" />
+        </div>
 
-      <?php foreach ($this->data['stateparams'] as $name => $value) : ?>
-        <input type="hidden"
-          name="<?php echo htmlspecialchars($name); ?>"
-          value="<?php echo htmlspecialchars($value); ?>" />
-      <?php endforeach; ?>
+        <button type="submit" class="btn btn-default">Submit</button>
 
-    </form>
+        <?php foreach ($this->data['stateparams'] as $name => $value) : ?>
+          <input type="hidden"
+            name="<?php echo htmlspecialchars($name); ?>"
+            value="<?php echo htmlspecialchars($value); ?>" />
+        <?php endforeach; ?>
+
+      </form>
+    </div>
   </div>
 </div>
 

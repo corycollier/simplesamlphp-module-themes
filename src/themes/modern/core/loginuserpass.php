@@ -4,152 +4,64 @@
  */
 ?>
 <?php
+// Variable assignment.
 $this->data['header'] = $this->t('{login:user_pass_header}');
-
-if (strlen($this->data['username']) > 0) {
-  $this->data['autofocus'] = 'password';
-} else {
-  $this->data['autofocus'] = 'username';
-}
-$this->includeAtTemplateBase('includes/header.php');
-
+$errorcode            = $this->data['errorcode'];
+$errorparams          = $this->data['errorparams'];
 ?>
+<?php $this->includeAtTemplateBase('includes/header.php'); ?>
 
-<?php
-if ($this->data['errorcode'] !== NULL) {
-?>
-<h1>I GOT HERE</h1>
-  <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5">
-    <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l erroricon" style="margin: 15px " />
+<?php if ($errorcode !== NULL) : ?>
+<div class="row">
+  <div class="alert alert-danger" role="alert">
     <h2><?php echo $this->t('{login:error_header}'); ?></h2>
-    <p><b><?php echo htmlspecialchars($this->t('{errors:title_' . $this->data['errorcode'] . '}', $this->data['errorparams'])); ?></b></p>
-    <p><?php echo htmlspecialchars($this->t('{errors:descr_' . $this->data['errorcode'] . '}', $this->data['errorparams'])); ?></p>
+    <p><?php echo htmlspecialchars($this->t('{errors:title_' . $errorcode . '}', $errorparams)); ?></p>
+    <p><?php echo htmlspecialchars($this->t('{errors:descr_' . $errorcode . '}', $errorparams)); ?></p>
   </div>
-<?php
-}
-?>
-  <h2 style="break: both"><?php echo $this->t('{login:user_pass_header}'); ?></h2>
+</div>
+<?php endif; ?>
 
-  <p class="logintext"><?php echo $this->t('{login:user_pass_text}'); ?></p>
 
-  <form action="?" method="post" name="f">
-  <table>
-    <tr>
-      <td rowspan="3"><img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-authentication.48x48.png" id="loginicon" alt="" /></td>
-      <td style="padding: .3em;"><?php echo $this->t('{login:username}'); ?></td>
-      <td>
-<?php
-if ($this->data['forceUsername']) {
-  echo '<strong style="font-size: medium">' . htmlspecialchars($this->data['username']) . '</strong>';
-} else {
-  echo '<input type="text" id="username" tabindex="1" name="username" value="' . htmlspecialchars($this->data['username']) . '" />';
-}
-?>
-      </td>
-<?php
-if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
-  $rowspan = 1;
-} elseif (array_key_exists('organizations', $this->data)) {
-  $rowspan = 3;
-} else {
-  $rowspan = 2;
-}
-?>
-      <td style="padding: .4em;" rowspan="<?php echo $rowspan; ?>">
-<?php
-if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
-    if ($this->data['rememberUsernameEnabled']) {
-        echo str_repeat("\t", 4);
-        echo '<input type="checkbox" id="remember_username" tabindex="4" name="remember_username" value="Yes" ';
-        echo ($this->data['rememberUsernameChecked'] ? 'checked="Yes" /> ' : '/> ');
-        echo $this->t('{login:remember_username}');
-    }
-    if ($this->data['rememberMeEnabled']) {
-        echo str_repeat("\t", 4);
-        echo '<input type="checkbox" id="remember_me" tabindex="4" name="remember_me" value="Yes" ';
-        echo $this->data['rememberMeChecked'] ? 'checked="Yes" /> ' : '/> ';
-        echo $this->t('{login:remember_me}');
-    }
-} else {
-  $text = $this->t('{login:login_button}');
-  echo str_repeat("\t", 4);
-  echo "<input type=\"submit\" tabindex=\"4\" id=\"regularsubmit\" value=\"{$text}\" />";
-}
-?>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding: .3em;"><?php echo $this->t('{login:password}'); ?></td>
-      <td><input id="password" type="password" tabindex="2" name="password" /></td>
-<?php
-// Move submit button to next row if remember checkbox enabled
-if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
-  $rowspan = (array_key_exists('organizations', $this->data) ? 2 : 1);
-?>
-      <td style="padding: .4em;" rowspan="<?php echo $rowspan; ?>">
-        <input type="submit" tabindex="5" id="regularsubmit" value="<?php echo $this->t('{login:login_button}'); ?>" />
-      </td>
-<?php
-}
-?>
-    </tr>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php echo $this->t('{login:user_pass_header}'); ?></h3>
+    </div>
 
-<?php
-if (array_key_exists('organizations', $this->data)) {
-?>
-    <tr>
-      <td style="padding: .3em;"><?php echo $this->t('{login:organization}'); ?></td>
-      <td><select name="organization" tabindex="3">
-<?php
-if (array_key_exists('selectedOrg', $this->data)) {
-  $selectedOrg = $this->data['selectedOrg'];
-} else {
-  $selectedOrg = NULL;
-}
+    <div class="panel-body">
+      <p class="logintext">
+        <?php echo $this->t('{login:user_pass_text}'); ?>
+      </p>
 
-foreach ($this->data['organizations'] as $orgId => $orgDesc) {
-  if (is_array($orgDesc)) {
-    $orgDesc = $this->t($orgDesc);
-  }
 
-  if ($orgId === $selectedOrg) {
-    $selected = 'selected="selected" ';
-  } else {
-    $selected = '';
-  }
+      <form action="?" method="post" name="f">
 
-  echo '<option ' . $selected . 'value="' . htmlspecialchars($orgId) . '">' . htmlspecialchars($orgDesc) . '</option>';
-}
-?>
-      </select></td>
-    </tr>
-<?php
-}
-?>
-  <tr><td></td><td>
-  <input type="submit" tabindex="5" id="mobilesubmit" value="<?php echo $this->t('{login:login_button}'); ?>" />
-  </td></tr>
-  </table>
-<?php
-foreach ($this->data['stateparams'] as $name => $value) {
-  echo('<input type="hidden" name="' . htmlspecialchars($name) . '" value="' . htmlspecialchars($value) . '" />');
-}
-?>
+        <div class="form-group">
+          <label for-"username">Username</label>
+          <input type="text" id="username"
+            tabindex="1"
+            name="username"
+            value="<?php echo htmlspecialchars($this->data['username']); ?>"
+            class="form-control"
+            />
+        </div>
 
-  </form>
+        <div class="form-group">
+          <label for-"password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" />
+        </div>
 
-<?php
+        <button type="submit" class="btn btn-default">Submit</button>
 
-if(!empty($this->data['links'])) {
-  echo '<ul class="links" style="margin-top: 2em">';
-  foreach($this->data['links'] AS $l) {
-    echo '<li><a href="' . htmlspecialchars($l['href']) . '">' . htmlspecialchars($this->t($l['text'])) . '</a></li>';
-  }
-  echo '</ul>';
-}
+        <?php foreach ($this->data['stateparams'] as $name => $value) : ?>
+          <input type="hidden"
+            name="<?php echo htmlspecialchars($name); ?>"
+            value="<?php echo htmlspecialchars($value); ?>" />
+        <?php endforeach; ?>
 
-echo('<h2 class="logintext">' . $this->t('{login:help_header}') . '</h2>');
-echo('<p class="logintext">' . $this->t('{login:help_text}') . '</p>');
+      </form>
+    </div>
+  </div>
+</div>
 
-$this->includeAtTemplateBase('includes/footer.php');
-?>
+<?php $this->includeAtTemplateBase('includes/footer.php'); ?>
