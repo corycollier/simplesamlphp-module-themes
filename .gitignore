@@ -1,6 +1,6 @@
 # Folders
 vendor/
-build
+build/*
 # keep the config files in the build folder
 !build/*.xml
 
