@@ -6,7 +6,7 @@
 ?>
 <?php
 // Define variables.
-$url_path = SimpleSAML_Module::getModuleURL('corytheme');
+$url_path = SimpleSAML_Module::getModuleURL('themes');
 $css_path = $url_path . '/css';
 $js_path  = $url_path . '/js';
 $img_path = $url_path . '/img';
@@ -47,7 +47,7 @@ $title    = isset($this->data['header']) ? $this->data['header'] :'SimpleSAMLphp
     <div class="container">
 
       <div class="row">
-        <div class="header col-md-12">
+        <div class="page-header col-md-12">
           <h1 class="mainTitle"><?php echo $title; ?></h1>
         </div>
       </div><!-- end .row -->
