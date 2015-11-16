@@ -1,40 +1,155 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+/**
+ * Override the login page
+ */
+?>
+<?php
+$this->data['header'] = $this->t('{login:user_pass_header}');
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+if (strlen($this->data['username']) > 0) {
+  $this->data['autofocus'] = 'password';
+} else {
+  $this->data['autofocus'] = 'username';
+}
+$this->includeAtTemplateBase('includes/header.php');
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+?>
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+<?php
+if ($this->data['errorcode'] !== NULL) {
+?>
+<h1>I GOT HERE</h1>
+  <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5">
+    <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l erroricon" style="margin: 15px " />
+    <h2><?php echo $this->t('{login:error_header}'); ?></h2>
+    <p><b><?php echo htmlspecialchars($this->t('{errors:title_' . $this->data['errorcode'] . '}', $this->data['errorparams'])); ?></b></p>
+    <p><?php echo htmlspecialchars($this->t('{errors:descr_' . $this->data['errorcode'] . '}', $this->data['errorparams'])); ?></p>
+  </div>
+<?php
+}
+?>
+  <h2 style="break: both"><?php echo $this->t('{login:user_pass_header}'); ?></h2>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/{{JQUERY_VERSION}}/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+  <p class="logintext"><?php echo $this->t('{login:user_pass_text}'); ?></p>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-    </body>
-</html>
+  <form action="?" method="post" name="f">
+  <table>
+    <tr>
+      <td rowspan="3"><img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-authentication.48x48.png" id="loginicon" alt="" /></td>
+      <td style="padding: .3em;"><?php echo $this->t('{login:username}'); ?></td>
+      <td>
+<?php
+if ($this->data['forceUsername']) {
+  echo '<strong style="font-size: medium">' . htmlspecialchars($this->data['username']) . '</strong>';
+} else {
+  echo '<input type="text" id="username" tabindex="1" name="username" value="' . htmlspecialchars($this->data['username']) . '" />';
+}
+?>
+      </td>
+<?php
+if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
+  $rowspan = 1;
+} elseif (array_key_exists('organizations', $this->data)) {
+  $rowspan = 3;
+} else {
+  $rowspan = 2;
+}
+?>
+      <td style="padding: .4em;" rowspan="<?php echo $rowspan; ?>">
+<?php
+if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
+    if ($this->data['rememberUsernameEnabled']) {
+        echo str_repeat("\t", 4);
+        echo '<input type="checkbox" id="remember_username" tabindex="4" name="remember_username" value="Yes" ';
+        echo ($this->data['rememberUsernameChecked'] ? 'checked="Yes" /> ' : '/> ');
+        echo $this->t('{login:remember_username}');
+    }
+    if ($this->data['rememberMeEnabled']) {
+        echo str_repeat("\t", 4);
+        echo '<input type="checkbox" id="remember_me" tabindex="4" name="remember_me" value="Yes" ';
+        echo $this->data['rememberMeChecked'] ? 'checked="Yes" /> ' : '/> ';
+        echo $this->t('{login:remember_me}');
+    }
+} else {
+  $text = $this->t('{login:login_button}');
+  echo str_repeat("\t", 4);
+  echo "<input type=\"submit\" tabindex=\"4\" id=\"regularsubmit\" value=\"{$text}\" />";
+}
+?>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: .3em;"><?php echo $this->t('{login:password}'); ?></td>
+      <td><input id="password" type="password" tabindex="2" name="password" /></td>
+<?php
+// Move submit button to next row if remember checkbox enabled
+if ($this->data['rememberUsernameEnabled'] || $this->data['rememberMeEnabled']) {
+  $rowspan = (array_key_exists('organizations', $this->data) ? 2 : 1);
+?>
+      <td style="padding: .4em;" rowspan="<?php echo $rowspan; ?>">
+        <input type="submit" tabindex="5" id="regularsubmit" value="<?php echo $this->t('{login:login_button}'); ?>" />
+      </td>
+<?php
+}
+?>
+    </tr>
+
+<?php
+if (array_key_exists('organizations', $this->data)) {
+?>
+    <tr>
+      <td style="padding: .3em;"><?php echo $this->t('{login:organization}'); ?></td>
+      <td><select name="organization" tabindex="3">
+<?php
+if (array_key_exists('selectedOrg', $this->data)) {
+  $selectedOrg = $this->data['selectedOrg'];
+} else {
+  $selectedOrg = NULL;
+}
+
+foreach ($this->data['organizations'] as $orgId => $orgDesc) {
+  if (is_array($orgDesc)) {
+    $orgDesc = $this->t($orgDesc);
+  }
+
+  if ($orgId === $selectedOrg) {
+    $selected = 'selected="selected" ';
+  } else {
+    $selected = '';
+  }
+
+  echo '<option ' . $selected . 'value="' . htmlspecialchars($orgId) . '">' . htmlspecialchars($orgDesc) . '</option>';
+}
+?>
+      </select></td>
+    </tr>
+<?php
+}
+?>
+  <tr><td></td><td>
+  <input type="submit" tabindex="5" id="mobilesubmit" value="<?php echo $this->t('{login:login_button}'); ?>" />
+  </td></tr>
+  </table>
+<?php
+foreach ($this->data['stateparams'] as $name => $value) {
+  echo('<input type="hidden" name="' . htmlspecialchars($name) . '" value="' . htmlspecialchars($value) . '" />');
+}
+?>
+
+  </form>
+
+<?php
+
+if(!empty($this->data['links'])) {
+  echo '<ul class="links" style="margin-top: 2em">';
+  foreach($this->data['links'] AS $l) {
+    echo '<li><a href="' . htmlspecialchars($l['href']) . '">' . htmlspecialchars($this->t($l['text'])) . '</a></li>';
+  }
+  echo '</ul>';
+}
+
+echo('<h2 class="logintext">' . $this->t('{login:help_header}') . '</h2>');
+echo('<p class="logintext">' . $this->t('{login:help_text}') . '</p>');
+
+$this->includeAtTemplateBase('includes/footer.php');
+?>

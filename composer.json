@@ -1,13 +1,13 @@
 {
-    "name"              : "corycollier/simplesamlphp-theme",
-    "description"       : "Theme for use in SimpleSAMLphp installations",
+    "name"              : "corycollier/simplesamlphp-module-themes",
+    "description"       : "Themes for use in SimpleSAMLphp installations",
     "type"              : "simplesamlphp-module",
     "license"           : "MIT",
     "minimum-stability" : "dev",
     "prefer-stable"     : true,
 
     "require"           : {
-        "simplesamlphp/composer-module-installer": "dev-master"
+        "simplesamlphp/composer-module-installer": "~1.0"
     },
 
     "require-dev" : {

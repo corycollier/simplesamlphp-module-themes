@@ -18,15 +18,15 @@
   </target>
 
   <target name="full-build"
-    depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
+    depends="prepare,static-analysis,phpunit,phpdox,compass-compile,copy-src,-check-failure"
     description="Performs static analysis, runs the tests, and generates project documentation"/>
 
   <target name="full-build-parallel"
-    depends="prepare,static-analysis-parallel,phpunit,phpdox,-check-failure"
+    depends="prepare,static-analysis-parallel,phpunit,phpdox,compass-compile,copy-src,-check-failure"
     description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
   <target name="quick-build"
-    depends="prepare,lint,phpunit-no-coverage"
+    depends="prepare,lint,phpunit-no-coverage,compass-compile,copy-src"
     description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
 
   <target name="static-analysis"
@@ -259,15 +259,34 @@
     </fail>
   </target>
 
+  <target name="compass-compile">
+    <exec executable="compass" dir="${basedir}/src" taskname="compass-compile">
+      <arg value="compile" />
+    </exec>
+  </target>
+
   <target name="copy-src" description="copy working files to production directory">
+    <!-- bootstrap files -->
+    <copy toDir="${basedir}/www/">
+      <fileset dir="${basedir}/src/bower_components/bootstrap/dist/" />
+    </copy>
+
+    <!-- font-awesome files -->
+    <copy toDir="${basedir}/www/css">
+      <fileset dir="${basedir}/src/bower_components/font-awesome/css/" />
+      <fileset dir="${basedir}/src/bower_components/font-awesome/fonts/" />
+    </copy>
+
     <copy toDir="${basedir}">
       <fileset dir="${basedir}/src">
         <exclude name="**/sass/" />
         <exclude name="**/.sass-cache/" />
         <exclude name="**/config.rb" />
         <exclude name="**/bower.json" />
+        <exclude name="**/bower_components/" />
       </fileset>
     </copy>
+
   </target>
 
 </project>
