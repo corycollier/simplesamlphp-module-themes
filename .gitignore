@@ -1,4 +1,5 @@
 # Folders
+.sass-cache/
 vendor/
 build/*
 # keep the config files in the build folder
