@@ -6,11 +6,35 @@
 ?>
 <?php
 // Define variables.
-$url_path = SimpleSAML_Module::getModuleURL('themes');
-$css_path = $url_path . '/css';
-$js_path  = $url_path . '/js';
-$img_path = $url_path . '/img';
-$title    = isset($this->data['header']) ? $this->data['header'] :'SimpleSAMLphp';
+$url_path  = SimpleSAML_Module::getModuleURL('themes');
+$css_path  = $url_path . '/css';
+$js_path   = $url_path . '/js';
+$img_path  = $url_path . '/img';
+
+$login_url = isset($this->data['loginurl'])
+  ? $this->data['loginurl']
+  : '';
+
+$title     = isset($this->data['header'])
+  ? $this->data['header']
+  : 'SimpleSAMLphp';
+
+$alert_msg = isset($this->data['isadmin'])
+  ? $this->t('{core:frontpage:loggedin_as_admin}')
+  : '<a href="' . $login_url . '">' . $this->t('{core:frontpage:login_as_admin}') . '</a>';
+
+if (array_key_exists('pageid', $this->data)) :
+  $hookinfo = array(
+    'pre'    => &$this->data['htmlinject']['htmlContentPre'],
+    'post'   => &$this->data['htmlinject']['htmlContentPost'],
+    'head'   => &$this->data['htmlinject']['htmlContentHead'],
+    'jquery' => &$jquery,
+    'page'   => $this->data['pageid']
+  );
+  SimpleSAML_Module::callHooks('htmlinject', $hookinfo);
+
+endif;
+
 ?>
 
 <!doctype html>
@@ -50,6 +74,17 @@ $title    = isset($this->data['header']) ? $this->data['header'] :'SimpleSAMLphp
         <div class="page-header col-md-12">
           <h1 class="mainTitle"><?php echo $title; ?></h1>
         </div>
+        <div class="alert">
+          <p><?php echo $alert_msg;?></p>
+        </div>
       </div><!-- end .row -->
+
+      <?php
+      if(!empty($this->data['htmlinject']['htmlContentPre'])) :
+        foreach($this->data['htmlinject']['htmlContentPre'] as $content) :
+          echo $content;
+        endforeach;
+      endif;
+      ?>
 
 
