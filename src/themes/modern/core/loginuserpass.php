@@ -1,6 +1,15 @@
 <?php
 /**
- * Override the login page
+ * Footer template.
+ *
+ * The main footer template. This is used throughout the application.
+ *
+ * @author     Cory Collier <corycollier@corycollier.com>
+ * @license    http://opensource.org/licenses/MIT  MIT License
+ * @version    git: $Id$
+ * @link       https://github.com/corycollier/simplesamlphp-module-themes
+ * @see        https://github.com/simplesamlphp/simplesamlphp/
+ * @since      File available since Release 1.3.0
  */
 ?>
 <?php
@@ -12,7 +21,7 @@ $errorparams          = $this->data['errorparams'];
 <?php $this->includeAtTemplateBase('includes/header.php'); ?>
 
 <?php if ($errorcode !== NULL) : ?>
-<div class="row">
+<div class="col-md-12">
   <div class="alert alert-danger" role="alert">
     <h2><?php echo $this->t('{login:error_header}'); ?></h2>
     <p><?php echo htmlspecialchars($this->t('{errors:title_' . $errorcode . '}', $errorparams)); ?></p>
@@ -21,8 +30,7 @@ $errorparams          = $this->data['errorparams'];
 </div>
 <?php endif; ?>
 
-
-<div class="row">
+<div class="col-md-12">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><?php echo $this->t('{login:user_pass_header}'); ?></h3>
@@ -33,9 +41,7 @@ $errorparams          = $this->data['errorparams'];
         <?php echo $this->t('{login:user_pass_text}'); ?>
       </p>
 
-
       <form action="?" method="post" name="f">
-
         <div class="form-group">
           <label for-"username">Username</label>
           <input type="text" id="username"

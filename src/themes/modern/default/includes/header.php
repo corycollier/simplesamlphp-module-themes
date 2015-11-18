@@ -1,10 +1,21 @@
 <?php
 /**
- * @file
- * Header include.
+ * Header template.
+ *
+ * The main header template. This is used throughout the application.
+ *
+ * @author     Cory Collier <corycollier@corycollier.com>
+ * @license    http://opensource.org/licenses/MIT  MIT License
+ * @version    git: $Id$
+ * @link       https://github.com/corycollier/simplesamlphp-module-themes
+ * @see        https://github.com/simplesamlphp/simplesamlphp/
+ * @since      File available since Release 1.3.0
  */
 ?>
 <?php
+$dir = SimpleSAML_Module::getModuleDir('themes');
+require $dir . '/lib/functions.php';
+
 // Define variables.
 $url_path  = SimpleSAML_Module::getModuleURL('themes');
 $css_path  = $url_path . '/css';
@@ -34,7 +45,6 @@ if (array_key_exists('pageid', $this->data)) :
   SimpleSAML_Module::callHooks('htmlinject', $hookinfo);
 
 endif;
-
 ?>
 
 <!doctype html>
@@ -68,17 +78,57 @@ endif;
         improve your experience.</p>
     <![endif]-->
 
-    <div class="container">
-
-      <div class="row">
-        <div class="page-header col-md-12">
-          <h1 class="mainTitle"><?php echo $title; ?></h1>
+    <!-- start .header -->
+    <div class="header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navigation" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><?php echo $title; ?></a>
+          </div>
+          <div class="collapse navbar-collapse" id="header-navigation">
+            <ul class="nav navbar-nav">
+              <li role="presentation"><a href="/">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Language <span class="caret"></span>
+                </a>
+                <?php
+                // render the language selector
+                echo simplesamlphp_get_languagebar($this, array(
+                  'post' => $_POST,
+                  'languageParameterName' => $this->languageParameterName,
+                ));
+                ?>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="alert">
-          <p><?php echo $alert_msg;?></p>
-        </div>
-      </div><!-- end .row -->
+      </nav>
 
+      <div class="container">
+        <div class="row">
+          <div class="page-header col-md-12">
+            <h1 class="mainTitle"><?php echo $title; ?></h1>
+          </div>
+          <div class="alert">
+            <p><?php echo $alert_msg;?></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- start the .content.row -->
+    <div class="content">
+      <div class="container">
       <?php
       if(!empty($this->data['htmlinject']['htmlContentPre'])) :
         foreach($this->data['htmlinject']['htmlContentPre'] as $content) :
@@ -86,5 +136,4 @@ endif;
         endforeach;
       endif;
       ?>
-
-
+        <div class="row">

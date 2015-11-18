@@ -269,6 +269,11 @@
   </target>
 
   <target name="copy-src" description="copy working files to production directory">
+    <!-- jquery files -->
+    <copy toDir="${basedir}/www/js/">
+      <fileset dir="${basedir}/src/bower_components/jquery/dist/" />
+    </copy>
+
     <!-- bootstrap files -->
     <copy toDir="${basedir}/www/">
       <fileset dir="${basedir}/src/bower_components/bootstrap/dist/" />
@@ -277,6 +282,8 @@
     <!-- font-awesome files -->
     <copy toDir="${basedir}/www/css">
       <fileset dir="${basedir}/src/bower_components/font-awesome/css/" />
+    </copy>
+    <copy toDir="${basedir}/www/fonts">
       <fileset dir="${basedir}/src/bower_components/font-awesome/fonts/" />
     </copy>
 
