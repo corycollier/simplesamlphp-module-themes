@@ -1,6 +1,15 @@
 <?php
 /**
- * Override the login page
+ * Login template.
+ *
+ * The page to allow a user to login.
+ *
+ * @author     Cory Collier <corycollier@corycollier.com>
+ * @license    http://opensource.org/licenses/MIT  MIT License
+ * @version    git: $Id$
+ * @link       https://github.com/corycollier/simplesamlphp-module-themes
+ * @see        https://github.com/simplesamlphp/simplesamlphp/
+ * @since      File available since Release 1.3.0
  */
 ?>
 <?php
@@ -32,7 +41,6 @@ $errorparams          = $this->data['errorparams'];
       <p class="logintext">
         <?php echo $this->t('{login:user_pass_text}'); ?>
       </p>
-
 
       <form action="?" method="post" name="f">
 
