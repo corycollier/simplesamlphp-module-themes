@@ -24,3 +24,8 @@ body {
   padding: 20px;
   color: #fff;
 }
+
+/* line 25, ../../sass/screen.scss */
+#portalcontent {
+  padding: 20px 0;
+}
