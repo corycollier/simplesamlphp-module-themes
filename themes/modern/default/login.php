@@ -56,7 +56,10 @@ $errorparams          = $this->data['errorparams'];
 
         <div class="form-group">
           <label for-"password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" />
+          <input type="password" id="password"
+            tabindex="2"
+            name="password"
+            class="form-control" />
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>
