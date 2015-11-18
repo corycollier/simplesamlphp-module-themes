@@ -35,7 +35,7 @@ function themes_hook_htmlinject(&$hookinfo) {
     // existing markup. Overriding it would be ideal.
     $info = strtr($info, array(
       // 'id="portalcontent"' => '',
-      // 'id="portalmenu"'    => '',
+      'id="portalmenu"'    => 'class="row"',
       'tabset_tabs ui-tabs-nav ui-helper-reset '          => 'nav nav-tabs',
       'ui-tabs-panel ui-widget-content ui-corner-bottom'  => '',
       'ui-helper-clearfix ui-widget-header ui-corner-all' => '',
