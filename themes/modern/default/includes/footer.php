@@ -14,11 +14,12 @@
 ?>
 <?php
 // Define variables.
-$url_path  = SimpleSAML_Module::getModuleURL('themes');
-$css_path  = $url_path . '/css';
-$js_path   = $url_path . '/js';
-$img_path  = $url_path . '/img';
+$url_path = SimpleSAML_Module::getModuleURL('themes');
+$css_path = $url_path . '/css';
+$js_path  = $url_path . '/js';
+$img_path = $url_path . '/img';
 ?>
+
 <?php
 // Output the post content items.
 if (!empty($this->data['htmlinject']['htmlContentPost'])) :
@@ -39,10 +40,10 @@ endif;
         <!-- start the .footer.row -->
         <div class="row">
           <div class="col-md-12">
-            <p>
-              <a href="#">Help</a>
-              <a href="#"> Privacy Policy</a>
-            </p>
+            <h2><?php echo $this->t('{core:frontpage:about_header}'); ?></h2>
+            <p><?php echo $this->t('{core:frontpage:about_text}'); ?></p>
+          </div>
+          <div class="col-md-12">
             <p>
               Theme by <a href="http://corycollier.com/">Cory Collier</a>, and can be found at
               <a href="https://github.com/corycollier/simplesamlphp-module-themes">
@@ -53,7 +54,6 @@ endif;
       </div>
     </div>
     <!-- end .footer -->
-
 
     <script src="<?php echo $js_path; ?>/jquery.js"></script>
     <script src="<?php echo $js_path; ?>/bootstrap.js"></script>

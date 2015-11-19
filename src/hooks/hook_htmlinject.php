@@ -22,27 +22,25 @@
  * @return array The modified hookinfo parameter.
  */
 function themes_hook_htmlinject(&$hookinfo) {
-  if (!isset($hookinfo['pre'])) {
-    return;
-  }
+  if (isset($hookinfo['pre'])) {
+    foreach ($hookinfo['pre'] as $i => $info) {
+      // This is pretty ugly, but to get the theme to work, We've got to modify the
+      // existing markup. Overriding it would be ideal.
+      $info = strtr($info, array(
+        'tabset_tabs' => 'nav nav-tabs',
+        // 'id="portalcontent"' => '',
+        'ui-state-active'  => 'active',
+        'ui-state-default' => '',
+        'ui-corner-top'    => '',
+        'ui-tabs-nav'      => '',
+        'id="portalmenu"' => 'class="row"',
+        'ui-tabs-panel ui-widget-content ui-corner-bottom'  => '',
+        'ui-helper-clearfix ui-widget-header ui-corner-all' => '',
+        'ui-tabs ui-widget ui-widget-content ui-corner-all' => '',
+      ));
 
-  foreach ($hookinfo['pre'] as $i => $info) {
-    if (!strpos($info, 'tabset_tabs ui-tabs-nav')) {
-      continue;
+      $hookinfo['pre'][$i] = $info;
     }
-
-    // This is pretty ugly, but to get the theme to work, We've got to modify the
-    // existing markup. Overriding it would be ideal.
-    $info = strtr($info, array(
-      // 'id="portalcontent"' => '',
-      'id="portalmenu"'    => 'class="row"',
-      'tabset_tabs ui-tabs-nav ui-helper-reset '          => 'nav nav-tabs',
-      'ui-tabs-panel ui-widget-content ui-corner-bottom'  => '',
-      'ui-helper-clearfix ui-widget-header ui-corner-all' => '',
-      'ui-tabs ui-widget ui-widget-content ui-corner-all' => '',
-    ));
-
-    $hookinfo['pre'][$i] = $info;
   }
 }
 

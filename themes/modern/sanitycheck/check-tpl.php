@@ -21,11 +21,11 @@ $this->includeAtTemplateBase('includes/header.php');
 <div class="row">
   <div class="col-md-12">
     <p> These checks failed:</p>
-    <ul>
     <?php foreach ($this->data['errors'] as $err) :  ?>
-      <li><i class="glyphicon glyphicon-remove"></i> <?php echo $err; ?></li>
+      <div class="alert alert-warning">
+        <i class="glyphicon glyphicon-remove"></i> <?php echo $err; ?>
+      </div>
     <?php endforeach; ?>
-    </ul>
   </div>
 </div>
 <?php endif; ?>
@@ -34,14 +34,13 @@ $this->includeAtTemplateBase('includes/header.php');
 <div class="row">
   <div class="col-md-12">
     <p> These checks succeeded:</p>
-    <ul>
     <?php foreach ($this->data['info'] as $info) : ?>
-      <li><i class="glyphicon glyphicon-ok"></i> <?php echo $info; ?></li>
+    <div class="alert alert-success">
+      <i class="glyphicon glyphicon-ok"></i> <?php echo $info; ?>
+    </div>
     <?php endforeach; ?>
-    </ul>
   </div>
 </div>
 <?php endif; ?>
-
 
 <?php $this->includeAtTemplateBase('includes/footer.php'); ?>

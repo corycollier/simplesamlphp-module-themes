@@ -19,7 +19,11 @@ body {
 
 .footer {
   padding : 20px;
-  color   : #fff;
+  color   : #ddd;
+
+  a {
+    color: #c00;
+  }
 }
 
 #portalcontent {
