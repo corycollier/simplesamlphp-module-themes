@@ -174,3 +174,22 @@ function simplesamlphp_get_expires ($view, $entry = array()) {
     return '(expires in ' . $value . ' hours)';
   }
 }
+
+function simplesamlphp_get_authentication_nav($view) {
+  $session  = SimpleSAML_Session::getSessionFromRequest();
+  $is_admin = (bool)$session->getAuthState('admin');
+  $text     = $view->t('{core:frontpage:login_as_admin}');
+  $params   = array('as' => 'admin');
+
+  if ($is_admin) {
+    $text = $view->t('{status:logout}');
+    $params['logout'] = '';
+  }
+
+
+  $url = SimpleSAML_Module::getModuleURL('core/authenticate.php', $params);
+
+  return '<li><a href="' . $url . '">' . $text . '</a></li>';
+  //core/authenticate.php?as=admin
+  //core/authenticate.php?as=admin&logout
+}
