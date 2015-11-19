@@ -22,10 +22,14 @@ body {
 /* line 20, ../../sass/screen.scss */
 .footer {
   padding: 20px;
-  color: #fff;
+  color: #ddd;
+}
+/* line 24, ../../sass/screen.scss */
+.footer a {
+  color: #c00;
 }
 
-/* line 25, ../../sass/screen.scss */
+/* line 29, ../../sass/screen.scss */
 #portalcontent {
   padding: 20px 0;
 }

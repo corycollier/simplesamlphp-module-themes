@@ -114,9 +114,5 @@ $header = isset($this->data['header'])
       <?php echo $this->t('{status:logout}'); ?></a> ]
     </p>
   <?php endif; ?>
-
-  <h2><?php echo $this->t('{core:frontpage:about_header}'); ?></h2>
-  <p><?php echo $this->t('{core:frontpage:about_text}'); ?></p>
-
 </div>
 <?php $this->includeAtTemplateBase('includes/footer.php');

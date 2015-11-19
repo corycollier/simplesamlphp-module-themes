@@ -21,6 +21,9 @@ $url_path  = SimpleSAML_Module::getModuleURL('themes');
 $css_path  = $url_path . '/css';
 $js_path   = $url_path . '/js';
 $img_path  = $url_path . '/img';
+$language  = $this->getLanguage();
+
+$this->data['isadmin'] = (bool)SimpleSAML_Session::getSessionFromRequest()->getAuthState('admin');
 
 $login_url = isset($this->data['loginurl'])
   ? $this->data['loginurl']
@@ -30,7 +33,7 @@ $title     = isset($this->data['header'])
   ? $this->data['header']
   : 'SimpleSAMLphp';
 
-$alert_msg = isset($this->data['isadmin'])
+$alert_msg = $this->data['isadmin']
   ? $this->t('{core:frontpage:loggedin_as_admin}')
   : '<a href="' . $login_url . '">' . $this->t('{core:frontpage:login_as_admin}') . '</a>';
 
@@ -48,12 +51,12 @@ endif;
 ?>
 
 <!doctype html>
-<html class="" lang="">
+<html class="" lang="<?php echo $language; ?>">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title><?php echo $title; ?></title>
-    <meta name="description" content="">
+    <meta name="description" content="SAML Configuration">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -68,7 +71,13 @@ endif;
     <!--[if IE]>
       <link href="<?php echo $css_path; ?>/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
     <![endif]-->
-
+<?php
+  if(!empty($this->data['htmlinject']['htmlContentHead'])) :
+    foreach($this->data['htmlinject']['htmlContentHead'] as $content) :
+      echo $content;
+    endforeach;
+  endif;
+?>
   </head>
   <body>
 
@@ -89,13 +98,14 @@ endif;
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><?php echo $title; ?></a>
+            <a class="navbar-brand" href="#">SAML</a>
           </div>
           <div class="collapse navbar-collapse" id="header-navigation">
             <ul class="nav navbar-nav">
               <li role="presentation"><a href="/">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              <?php echo simplesamlphp_get_authentication_nav($this); ?>
               <li role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                   Language <span class="caret"></span>
@@ -118,15 +128,12 @@ endif;
           <div class="page-header col-md-12">
             <h1 class="mainTitle"><?php echo $title; ?></h1>
           </div>
-          <div class="alert">
-            <p><?php echo $alert_msg;?></p>
-          </div>
         </div>
       </div>
 
     </div>
 
-    <!-- start the .content.row -->
+    <!-- start the .content -->
     <div class="content">
       <div class="container">
       <?php
