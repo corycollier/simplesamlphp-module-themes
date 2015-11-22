@@ -28,6 +28,7 @@ $icon_disabled = '<i class="glyphicon glyphicon-remove" />';
 </div>
 
 <div class="col-md-12">
+  // @TODO: Update code to add a standard table handler
   <table class="table table-bordered">
     <thead>
       <th>Module</th>
